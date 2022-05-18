@@ -1,9 +1,11 @@
 # Princesse Margot
-## _ Intranet Associative _
+## _Associative Intranet_
 
 ## Features
 
-- 
+- Login/Register
+- Register your activity
+- Hospital Planning
 
 ## Tech
 
