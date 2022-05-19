@@ -1,24 +1,20 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import logo from '../assets/logo.png';
 import Menu from '@mui/material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import MenuItem from '@mui/material/MenuItem';
-import Container from '@mui/material/Container';
 import MenuIcon from '@material-ui/icons/Menu';
+import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-
 import { Link, useNavigate } from 'react-router-dom';
 
-interface IHeaderProps {
-  color: string;
-}
-
-export const Header: React.FC<IHeaderProps> = ({ color }) => {
+export const Header: React.FC = () => {
   const [navBar, setNavBar] = React.useState<null | HTMLElement>(null);
-  const pages = ['Login', 'Register'];
+  const pages: {[key: string]: string} = {"Se connecter": 'login', "S'inscrire": 'register'};
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setNavBar(event.currentTarget);
@@ -31,14 +27,15 @@ export const Header: React.FC<IHeaderProps> = ({ color }) => {
 
   return (
     <AppBar position="sticky">
-      <Container maxWidth="xl" style={{ backgroundColor: color }}>
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
-            sx={{ mr: 2, fontFamily: 'monospace', fontWeight: 700, letterSpacing: '.3rem', color: 'inherit', flexGrow: 10 }}>
+            sx={{ mr: 2, fontFamily: 'monospace', fontWeight: 700, letterSpacing: '.3rem', color: 'inherit' }}>
             <Button color="inherit" component={Link} to="/">Princesse Margot</Button>
-          </Typography>
+          </Typography> */}
+          <img src={logo} alt='logo' style={{ height: 60, width: 60 , marginRight: 10 }}></img>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none', lg: 'none' }}}>
             <IconButton
               size="large"
@@ -57,16 +54,16 @@ export const Header: React.FC<IHeaderProps> = ({ color }) => {
               open={Boolean(navBar)}
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' }}}>
-              {pages.map((page) => (
-                <MenuItem key={page} color='inherit' onClick={() => {handleCloseNavMenu(); navigate(`/${page.toLowerCase()}`)}}>
+              {Object.keys(pages).map((page, index) => (
+                <MenuItem key={index} color='inherit' onClick={() => {handleCloseNavMenu(); navigate(`/${pages[page]}`)}}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
-              <Button color="inherit" component={Link} to="/login">Login</Button>
-              <Button color="inherit" component={Link} to="/register">Register</Button>
+              <Button color="inherit" component={Link} to="/login">Se connecter</Button>
+              <Button color="inherit" component={Link} to="/register">S'inscrire</Button>
           </Box>
         </Toolbar>
       </Container>

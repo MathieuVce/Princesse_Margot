@@ -9,7 +9,7 @@ export const ClientProvider: React.FC<any> = ({ children }) => {
   const [user, setUser] = useState<null | IClient>(null);
 
   const login: TLoginFC = async (payload: IAuth) => {
-    // const { email, password } = payload;
+    const { email } = payload;
     // const response = await fetch("/api/login", {
     //     method: "POST",
     //     headers: {
@@ -18,7 +18,13 @@ export const ClientProvider: React.FC<any> = ({ children }) => {
     //     body: JSON.stringify({ email, password })
     // });
     // const data = await response.json();
-    // setUser(data);
+    setUser({
+      email,
+      birthDate: new Date(),
+      lastName: 'Mathieu',
+      firstName: 'Vacance',
+    });
+    return ('logged in');
   };
 
   const register: TRegisterFC = async (payload: IRegister) => {

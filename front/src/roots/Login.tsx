@@ -1,52 +1,58 @@
 import * as React from 'react';
-import { useState } from 'react';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
+import { Link } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import Avatar from '@mui/material/Avatar';
+import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
-import { Copyright } from '../utils/utils';
+import { useContext, useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
+import { AlertPop } from '../components/Alert';
 import { useNavigate } from 'react-router-dom';
-import { Alert, Snackbar } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ClientContext } from '../contexts/ClientContext';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const Login: React.FunctionComponent = () => {
-  
-  const theme = createTheme();
-  // const navigate = useNavigate();
-  const [open, setOpen] = useState(true);
 
-  
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  // const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const { login } = useContext(ClientContext); 
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    });
-    // navigate("/home");
-    setOpen(true);
+    const values = {
+      email: data.get('email')?.toString()!,
+      password: data.get('password')?.toString()!
+    };
+    const res = await login(values);
+
+    if (res === 'logged in') {
+      // navigate("/home");
+      setShow(true);
+    }
   };
 
+  
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline/>
+    <>
+        <AlertPop show={show} setShow={setShow}/>
         <Box
           sx={{
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            alignItems: 'center'
           }}
         >
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5" sx={{ mb: 4 }}>
+            Se connecter
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -54,7 +60,7 @@ const Login: React.FunctionComponent = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Adresse email"
               name="email"
               autoComplete="email"
               autoFocus
@@ -64,40 +70,38 @@ const Login: React.FunctionComponent = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Mot de passe"
               type="password"
               id="password"
               autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              control={<Checkbox value="remember" color="secondary"/>}
+              label="Rester connecté"
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, bgcolor: '#0094AB' }}
+              sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Se connecter
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link variant="body2" color={'#0094AB'}>
-                  Forgot password?
+                <Link variant="body2" color={'secondary'}>
+                  Mot de passe oublié ?
                 </Link>
               </Grid>
-              <Grid item>
-                <Link variant="body2" color={'#0094AB'}>
-                  Don't have an account? Sign Up
+              <Grid item xs textAlign={'end'}>
+                <Link variant="body2" color={'secondary'}>
+                  Pas encore de compte ? S'inscrire
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4, flex: 1, flexDirection: 'row'}}/>
-      </Container>
-    </ThemeProvider>
+         </>
   );
 }
 
