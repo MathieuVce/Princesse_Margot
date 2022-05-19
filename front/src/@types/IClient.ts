@@ -1,8 +1,8 @@
 export interface IClient {
-  firstName: string;
-  lastName: string;
   email: string;
   birthDate: Date;
+  lastName: string;
+  firstName: string;
 }
 
 export interface IAuth {
@@ -11,6 +11,6 @@ export interface IAuth {
 }
 
 export interface IRegister {
-  details: IClient;
   login: IAuth;
+  details: IClient;
 }

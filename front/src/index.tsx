@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './roots/App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { ClientProvider } from './contexts/ClientContext';
+import Navigation from './navigation/Navigation';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <ClientProvider>
-      <App/>
+      <Navigation/>
     </ClientProvider>
   </React.StrictMode>
 );

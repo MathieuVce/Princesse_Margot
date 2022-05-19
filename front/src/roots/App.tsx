@@ -1,12 +1,13 @@
+import { Outlet } from 'react-router';
+import { Header } from '../components/Header';
 
 const App: React.FunctionComponent = () => {
   
   return (
-    <>
-      <div>
-        <h1>Home</h1>
-      </div>
-    </>
+    <div>
+      <Header color='#0094AB'/>
+      <Outlet/>
+    </div>
   );
 };
 

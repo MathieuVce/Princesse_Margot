@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
 
 const NoPage: React.FunctionComponent = () => {
   
-    return(
+    return (
       <>
-        <Link to="/"></Link>
+        <label>
+          404
+        </label>
       </>
     );
   };

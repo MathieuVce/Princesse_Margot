@@ -7,7 +7,6 @@ import Login from "../roots/Login";
 import NoPage from "../roots/NoPage";
 import Register from "../roots/Register";
 import Password from "../roots/Password";
-import { RequireAuth } from "./RequireAuth";
 
 const Navigation: React.FunctionComponent = () => {
     return (
@@ -18,10 +17,7 @@ const Navigation: React.FunctionComponent = () => {
             <Route path='register' element={<Register/>}/>
             <Route path='password' element={<Password/>}/>
           </Route>
-          <Route>
-            <RequireAuth>
-
-            </RequireAuth>
+          <Route path='home'>
           </Route>
           <Route path="*" element={<NoPage/>}/>
         </Routes>

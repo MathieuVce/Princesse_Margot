@@ -1,5 +1,5 @@
-import { IAuth, IClient, IRegister } from "./IClient";
 import { IRegisterActivity } from "./IActivity";
+import { IAuth, IClient, IRegister } from "./IClient";
 
 export interface IClientContext {
   client?: null | IClient;
@@ -15,7 +15,6 @@ export type TLoginFC = (payload: IAuth) => Promise<any>;
 export type TLogoutFC = () => Promise<any>; // Check with back need
 export type TRegisterFC = (payload: IRegister) => Promise<any>;
 export type TResetPasswwordFC = (payload: IAuth) => Promise<any>;
-
 export type TRegisterActivityFC = (payload: IRegisterActivity) => Promise<any>;
 
 export const defaultClientValue: IClientContext = {
