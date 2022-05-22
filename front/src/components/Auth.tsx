@@ -1,5 +1,6 @@
 import { AlertPop } from "./Alert";
 import { EAuth } from "../@types/EAuth";
+import { Link } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { EAlert } from "../@types/EAlert";
 import { checkEmail } from '../utils/utils';
@@ -7,7 +8,7 @@ import { useContext, useState } from "react";
 import { ClientContext } from "../contexts/ClientContext";
 import { IAuth, IPassword, IRegister, IResponse } from "../@types/IClient";
 import { LockOutlined, PersonRounded, LockOpenRounded, RotateLeftRounded } from '@material-ui/icons';
-import { Box, Grid, Link, Avatar, IconProps, Checkbox, Typography, FormControlLabel, Button } from '@mui/material';
+import { Box, Grid, Avatar, IconProps, Checkbox, Typography, FormControlLabel, Button } from '@mui/material';
 
 interface IAuthProps {
     type: EAuth;
@@ -112,7 +113,7 @@ export const Auth: React.FC<IAuthProps> = ({ type, values, children }) => {
         <Grid container>
           <Grid item xs textAlign={'center'}>
             <Button variant='text' color='secondary'sx={{ "&:hover": { backgroundColor: 'transparent' }, textAlign: 'right' }}>
-              <Link href={itemObj[type].info[3]} variant="body1" color='secondary'>
+              <Link to={itemObj[type].info[3]} style={{ color: '#009CAB' }}>
                 {itemObj[type].info[2]}
               </Link>
             </Button>

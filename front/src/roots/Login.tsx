@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { EAuth } from '../@types/EAuth';
+import { Link } from 'react-router-dom';
 import { IAuth } from '../@types/IClient';
 import { Auth } from '../components/Auth';
 import { checkEmail } from '../utils/utils';
-import { Link, Grid, TextField, Button} from '@mui/material';
+import { Grid, TextField, Button} from '@mui/material';
 
 const Login: React.FunctionComponent = () => {
 
@@ -48,7 +49,7 @@ const Login: React.FunctionComponent = () => {
         />
         <Grid item xs textAlign={'right'}>
           <Button variant='text' color='secondary' sx={{ "&:hover": { backgroundColor: 'transparent' } }}>
-            <Link href='/password' variant="body2" color='secondary'>
+            <Link to='/password' style={{ color: '#009CAB' }}>
               Mot de passe oublié ?
             </Link>
           </Button>
