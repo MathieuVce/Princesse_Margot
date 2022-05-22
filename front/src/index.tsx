@@ -1,10 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './index.css';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import { theme } from './utils/utils';
+import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import { ClientProvider } from './contexts/ClientContext';
 import Navigation from './navigation/Navigation';
+import { ThemeProvider } from '@mui/material/styles';
+import { ClientProvider } from './contexts/ClientContext';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ClientProvider>
-      <Navigation/>
+      <ThemeProvider theme={theme}>
+        <Navigation/>
+      </ThemeProvider>
     </ClientProvider>
   </React.StrictMode>
 );

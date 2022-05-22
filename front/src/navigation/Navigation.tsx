@@ -17,8 +17,6 @@ const Navigation: React.FunctionComponent = () => {
             <Route path='register' element={<Register/>}/>
             <Route path='password' element={<Password/>}/>
           </Route>
-          <Route path='home'>
-          </Route>
           <Route path="*" element={<NoPage/>}/>
         </Routes>
       </BrowserRouter>

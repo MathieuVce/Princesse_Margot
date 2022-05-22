@@ -1,3 +1,5 @@
+import { EAlert } from "./EAlert";
+
 export interface IClient {
   email: string;
   birthDate: Date;
@@ -13,4 +15,13 @@ export interface IAuth {
 export interface IRegister {
   login: IAuth;
   details: IClient;
+}
+
+export interface IResponse {
+  status: EAlert;
+  message: string;
+}
+
+export interface IPassword {
+  email: string;
 }

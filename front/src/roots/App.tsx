@@ -1,27 +1,25 @@
 import { Outlet } from 'react-router';
 import Image from '../assets/bg.jpeg';
-import { theme } from '../utils/utils';
 import { Header } from '../components/Header';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
 import { Copyright } from '../components/Copyright';
-import { ThemeProvider } from '@mui/material/styles';
+import { Container, CssBaseline } from '@mui/material/';
 
 const App: React.FunctionComponent = () => {
-  
+
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Header/>
-      <div style={{ position: 'fixed', opacity: '0.15', maxWidth: 'xs' }}>
-        <img src={Image} alt='background'/>
+      <div style={{ display: 'grid', height: '100%', opacity: '0.1', }}>
+        <img src={Image} alt='background' style={{ position: 'fixed', minWidth: '150vh', maxHeight: '150vh'}}/>
+        <div style={{ backgroundColor: 'black', height: '100%', width: '100%', position: 'fixed', opacity: '0.2' }}/>
       </div>
-      <Container component="main" maxWidth="xs" sx={{ mt: 6 }}>
+      <Container component="main" maxWidth="xs" sx={{ mt: { xs: 4, sm: 6, md: 8, lg: 16 } }}>
         <CssBaseline/>
         <Outlet/>
       </Container>
       <Copyright sx={{ pt: 3, pl: 4, position: 'fixed', bottom: 0, backgroundColor: '#95679C', width: '100%', height: 62 }}/>
-    </ThemeProvider>
-  );
+    </>
+    );
 };
 
 export default App;
