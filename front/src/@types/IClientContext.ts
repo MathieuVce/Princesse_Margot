@@ -9,7 +9,7 @@ export interface IClientContext {
   register: TRegisterFC;
   resetPassword: TResetPasswwordFC;
   registerActivity: TRegisterActivityFC;
-}
+};
 
 export type TLoginFC = (payload: IAuth) => Promise<any>;
 export type TLogoutFC = () => Promise<any>; // Check with back need
@@ -25,4 +25,4 @@ export const defaultClientValue: IClientContext = {
   register: () => Promise.reject(null),
   resetPassword: () => Promise.reject(null),
   registerActivity: () => Promise.reject(null)
-}
+};

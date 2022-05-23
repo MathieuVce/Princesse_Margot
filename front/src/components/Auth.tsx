@@ -1,10 +1,10 @@
-import { AlertPop } from "./Alert";
 import { EAuth } from "../@types/EAuth";
 import { Link } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
-import { EAlert } from "../@types/EAlert";
 import { checkEmail } from '../utils/utils';
 import { useContext, useState } from "react";
+import { EAlert } from "../@types/IAlert";
+import { AlertContext } from "../contexts/AlertContext";
 import { ClientContext } from "../contexts/ClientContext";
 import { IAuth, IPassword, IRegister, IResponse } from "../@types/IClient";
 import { LockOutlined, PersonRounded, LockOpenRounded, RotateLeftRounded } from '@material-ui/icons';
@@ -17,8 +17,9 @@ interface IAuthProps {
 
 export const Auth: React.FC<IAuthProps> = ({ type, values, children }) => {
   const { login, register, resetPassword } = useContext(ClientContext);
-  const [show, setShow] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
+  const { Alerts } = useContext(AlertContext);
+
+  
   const [loading, setLoading] = useState<boolean>(false);
   const [consent, setConsent] = useState<boolean>(false);
   const itemObj: {[key: string]: {info: string[], icon: IconProps}} = {
@@ -33,22 +34,25 @@ export const Auth: React.FC<IAuthProps> = ({ type, values, children }) => {
       'login': async function loginUser() {
         const res: IResponse = await login(values as IAuth);
         if (res.status === EAlert.success) {
-          setMessage(res.message);
-          setShow(true);
+          Alerts.success({
+            message: res.message
+          });
         }
       },
       'register': async function registerUser() {
         const res: IResponse = await register(values as IRegister);
         if (res.status === EAlert.success) {
-          setMessage(res.message);
-          setShow(true);
+          Alerts.success({
+            message: res.message
+          });
         }
       },
       'password': async function resetUserPassword() {
         const res: IResponse = await resetPassword(values as IPassword);
         if (res.status === EAlert.success) {
-          setMessage(res.message);
-          setShow(true);
+          Alerts.success({
+            message: res.message
+          });
         }
       }
     };
@@ -72,7 +76,7 @@ export const Auth: React.FC<IAuthProps> = ({ type, values, children }) => {
 
   return (
    <>
-    <AlertPop show={show} setShow={setShow} message={message} type={EAlert.success}/>
+    {/* <AlertPop alert={alert}  setAlert={setAlert}/> */}
     <Box
       sx={{
         marginTop: 4,

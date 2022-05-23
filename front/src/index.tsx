@@ -1,10 +1,12 @@
-import React from 'react';
 import './index.css';
+import React from 'react';
 import { theme } from './utils/utils';
 import ReactDOM from 'react-dom/client';
+import { SnackbarProvider } from "notistack";
 import reportWebVitals from './reportWebVitals';
 import Navigation from './navigation/Navigation';
 import { ThemeProvider } from '@mui/material/styles';
+import { AlertProvier } from './contexts/AlertContext';
 import { ClientProvider } from './contexts/ClientContext';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
@@ -16,7 +18,11 @@ root.render(
   <React.StrictMode>
     <ClientProvider>
       <ThemeProvider theme={theme}>
-        <Navigation/>
+        <SnackbarProvider anchorOrigin={{ vertical: "top", horizontal: "right" }} maxSnack={4} preventDuplicate>
+          <AlertProvier>
+            <Navigation/>
+          </AlertProvier>
+        </SnackbarProvider>
       </ThemeProvider>
     </ClientProvider>
   </React.StrictMode>
