@@ -7,6 +7,7 @@ import Login from "../roots/Login";
 import NoPage from "../roots/NoPage";
 import Register from "../roots/Register";
 import Password from "../roots/Password";
+import ActivityDetail from '../roots/ActivityDetail';
 
 const Navigation: React.FunctionComponent = () => {
     return (
@@ -16,6 +17,7 @@ const Navigation: React.FunctionComponent = () => {
             <Route path='login' element={<Login/>}/>
             <Route path='register' element={<Register/>}/>
             <Route path='password' element={<Password/>}/>
+            <Route path='activity' element={<ActivityDetail/>}/>
           </Route>
           <Route path='home'>
           </Route>

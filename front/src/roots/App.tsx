@@ -6,6 +6,8 @@ import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Copyright } from '../components/Copyright';
 import { ThemeProvider } from '@mui/material/styles';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
 
 const App: React.FunctionComponent = () => {
   
