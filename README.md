@@ -7,7 +7,7 @@
 - Register your activity
 - Hospital Planning
 
-## Tech
+## Environement
 
 Princesse Margot uses a number of open source projects to work properly:
 
@@ -27,7 +27,6 @@ Princesse Margot requires:
 Install the dependencies and devDependencies and start the server.
 
 ```sh
-cd front
 npm install
 npm start
 ```
@@ -37,7 +36,7 @@ npm start
 Generating pre-built zip archives for distribution:
 
 ```sh
-npm build
+npm run build
 ```
 
 Verify the deployment by navigating to your server address in
