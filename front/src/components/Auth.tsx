@@ -71,7 +71,6 @@ export const Auth: React.FC<IAuthProps> = ({ type, values, children }) => {
   };
 
   return (
-   <>
     <Box
       sx={{
         marginTop: 4,
@@ -120,6 +119,5 @@ export const Auth: React.FC<IAuthProps> = ({ type, values, children }) => {
         </Grid>
       </Box>
     </Box>
-   </>
   );
 };

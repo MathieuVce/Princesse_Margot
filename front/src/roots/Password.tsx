@@ -19,22 +19,20 @@ const Password: React.FunctionComponent = () => {
   };
 
   return (
-    <>
-      <Auth type={EAuth.password} values={passwordValues}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Adresse E-mail"
-          name="email"
-          autoComplete="email"
-          autoFocus
-          error={!checkEmail(passwordValues.email)}
-          onChange={(e) => handleChangeAuth('email', e.target.value)}
-        />
-      </Auth>
-    </>
+    <Auth type={EAuth.password} values={passwordValues}>
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        id="email"
+        label="Adresse E-mail"
+        name="email"
+        autoComplete="email"
+        autoFocus
+        error={!checkEmail(passwordValues.email)}
+        onChange={(e) => handleChangeAuth('email', e.target.value)}
+      />
+    </Auth>
   );
 }
   
