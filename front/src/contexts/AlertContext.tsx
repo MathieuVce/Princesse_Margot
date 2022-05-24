@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { CloseRounded } from '@material-ui/icons';
 import { TAlerts, IAlert } from '../@types/IAlert';
-import { useSnackbar, VariantType } from 'notistack';
+import { SnackbarMessage, useSnackbar, VariantType } from 'notistack';
 import React, { createContext, Fragment, useCallback } from 'react';
   
   
@@ -19,7 +19,7 @@ export const AlertProvier: React.FC = ({ children }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const handleClickWithAction = useCallback((alert: IAlert, type: VariantType) => {
-    enqueueSnackbar(alert.message, {
+    enqueueSnackbar(`${alert.message}/${type}` as SnackbarMessage, {
         variant: type,
         autoHideDuration: alert.duration || 5000,
         action: (key) => (

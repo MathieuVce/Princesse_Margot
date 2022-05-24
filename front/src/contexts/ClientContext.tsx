@@ -38,7 +38,7 @@ export const ClientProvider: React.FC<any> = ({ children }) => {
     // });
     // const data = await response.json();
     // setUser(data);
-    return {status: 'success', message: 'Inscription réussie'};
+    return {status: 'error', message: 'Inscription réussie'};
   };
 
   const resetPassword: TResetPasswwordFC = async (payload: IPassword) => {
@@ -52,7 +52,7 @@ export const ClientProvider: React.FC<any> = ({ children }) => {
     // });
     // const data = await response.json();
     // setUser(data);
-    return {status: 'success', message: 'Réinitialisation du mot de passe réussie'};
+    return {status: 'warning', message: 'Réinitialisation du mot de passe réussie'};
   };
 
   const registerActivity: TRegisterActivityFC = async (payload: IRegisterActivity) => {
