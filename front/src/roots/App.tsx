@@ -19,7 +19,7 @@ const App: React.FunctionComponent = () => {
       </Container>
       <Copyright sx={{ pt: 3, pl: 4, position: 'fixed', bottom: 0, backgroundColor: '#95679C', width: '100%', height: 62 }}/>
     </>
-    );
+  );
 };
 
 export default App;
