@@ -2,7 +2,7 @@ import { EAuth } from "../@types/EAuth";
 import { LoadingButton } from '@mui/lab';
 import { checkEmail } from '../utils/utils';
 import { useContext, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { AlertContext } from "../contexts/AlertContext";
 import { ClientContext } from "../contexts/ClientContext";
 import { IAuth, IPassword, IRegister, IResponse } from "../@types/IClient";
@@ -21,9 +21,9 @@ export const Auth: React.FC<IAuthProps> = ({ type, values, children }) => {
   
   const [loading, setLoading] = useState<boolean>(false);
   const [consent, setConsent] = useState<boolean>(false);
-  const itemObj: {[key: string]: {info: string[], icon: IconProps}} = {
+  const itemObj: {[key: string]: {info: any[], icon: IconProps, link?: string}} = {
     'login': {info: ["Se connecter", "Rester connecté", "Pas encore de compte ? S'inscrire", "/register"], icon: <LockOpenRounded/>},
-    'register': {info: ["S'inscrire", "J'accepte les conditions d'utilisation de Princesse Margot*",  "Déjà un compte ? Connectez-vous", "/login"], icon:  <PersonRounded/>},
+    'register': {info: ["S'inscrire", "J'accepte les/de Princesse Margot*",  "Déjà un compte ? Connectez-vous", "/login"], icon:  <PersonRounded/>, link: "https://www.princessemargot.org/mentions-legales&conditions d'utilisation"},
     'password': {info: ["Réinitialiser mot de passe", "",  "Revenir à la page de connexion", "/login"], icon: <RotateLeftRounded/>}
   };
   const itemRedirect: {[key: string]: string} = {
@@ -92,7 +92,25 @@ export const Auth: React.FC<IAuthProps> = ({ type, values, children }) => {
           <Grid item xs={12} marginTop={2}>
             <FormControlLabel
               control={<Checkbox color="secondary" onChange={() => setConsent(!consent)}/>}
-              label={itemObj[type].info[1]}
+              label={
+                itemObj[type].link ? (
+                  <Grid container>
+                    <Typography variant="body1" color="textSecondary">
+                      {itemObj[type].info[1].split('/')[0]}
+                    </Typography>
+                    <Link to={itemObj[type].link?.split('&')[0]!} target="_blank" style={{ color: '#009CAB', paddingLeft: 5 }}>
+                      {itemObj[type].link?.split('&')[1]}
+                    </Link>
+                    <Typography variant="body1" color="textSecondary">
+                      {itemObj[type].info[1].split('/')[1]}
+                    </Typography> 
+                  </Grid>
+                ) : (
+                  <Typography variant="body1" color="textSecondary">
+                    {itemObj[type].info[1]}
+                  </Typography>
+                )
+              }
             />
           </Grid>
         )}

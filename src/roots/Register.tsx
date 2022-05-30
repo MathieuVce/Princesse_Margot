@@ -2,22 +2,22 @@ import * as React from 'react';
 import { useState } from 'react';
 import { EAuth } from '../@types/EAuth';
 import { Auth } from '../components/Auth';
-import { checkEmail } from '../utils/utils';
 import { Grid, TextField } from '@mui/material';
 import { IAuth, IClient } from '../@types/IClient';
 import { IconTextField } from '../components/IconTextField';
+import { checkBirthDate, checkEmail, checkPassword } from '../utils/utils';
 import { VisibilityRounded, VisibilityOffRounded } from '@material-ui/icons';
 
 const Register: React.FunctionComponent = () => {
   const [visible, setVisible] = useState(false);
   const [authValues, setAuthValues] = useState<IAuth>({
       email: 'tmp.tmp@tmp.tmp',
-      password: '',
+      password: 'Motdepasse1',
   });
   const [detailsValues, setDetailsValues] = useState<IClient>({
     firstName: '',
     lastName: '',
-    birthDate: new Date(),
+    birthDate: new Date('2000-01-01'),
     email: '',
   });
 
@@ -73,6 +73,7 @@ const Register: React.FunctionComponent = () => {
             name="email"
             autoComplete="email"
             error={!checkEmail(authValues.email)}
+            helperText={!checkEmail(authValues.email) ? "Veuillez suivre le format d'email: exemple@exemple.com" : ''}
             onChange={(e) => handleChangeAuth('email', e.target.value)}
           />
         </Grid>
@@ -90,6 +91,8 @@ const Register: React.FunctionComponent = () => {
           onChange={(e: { target: { value: string; }; }) => handleChangeAuth('password', e.target.value)}
           iconEnd={visible ? <VisibilityOffRounded/> : <VisibilityRounded/>}
           onIconClick={() => setVisible(!visible)}
+          error={!checkPassword(authValues.password)}
+          helperText={!checkPassword(authValues.password) ? "Votre mot de passe doit contenir au moins 6 caractères, une lettre majuscule et un chiffre. Pas d'accent ni de caractère spécial." : ' '}
         />
         </Grid>
         <Grid item xs={12}>
@@ -104,6 +107,8 @@ const Register: React.FunctionComponent = () => {
               shrink: true,
             }}
             onChange={(e) => handleChangeDetails('birthDate', e.target.value)}
+            error={!checkBirthDate(detailsValues.birthDate)}
+            helperText={!checkBirthDate(detailsValues.birthDate) ? "Vous devez avoir au moins 10 ans" : ' '}
           />
         </Grid>
       </Grid>
