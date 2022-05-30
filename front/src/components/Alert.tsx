@@ -1,19 +1,26 @@
-import { EAlert } from "../@types/EAlert";
-import { Snackbar, Alert } from "@mui/material";
+import { forwardRef, useCallback } from 'react';
+import { Alert, AlertColor } from '@mui/material';
+import { SnackbarContent, useSnackbar } from 'notistack';
 
-interface IAlertPopProps {
-  show: boolean;
-  setShow: React.Dispatch<React.SetStateAction<boolean>>
-  message: string;
-  type: EAlert;
+interface IAlertComponentProps {
+  key: string | number,
+  message: string | React.ReactNode
 }
 
-export const AlertPop: React.FC<IAlertPopProps> = ({ show, setShow, message, type }) => {
+export const AlertComponent = forwardRef<HTMLDivElement, IAlertComponentProps>((props, ref) => {
+  const { closeSnackbar } = useSnackbar();
+  const message = props.message?.toString().split("/")[0];
+  const severity = props.message?.toString().split("/")[1] as AlertColor;
+
+  const handleDismiss = useCallback(() => {
+    closeSnackbar(props.key);
+  }, [props.key, closeSnackbar]);
+
   return (
-    <Snackbar open={show} autoHideDuration={6000} onClose={() => {setShow(false)}} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
-      <Alert onClose={() => {setShow(false)}} severity={type} sx={{ width: '100%' }}>
-        {message}
+    <SnackbarContent ref={ref}>
+      <Alert onClose={() => handleDismiss()} severity={severity}>
+          {message}
       </Alert>
-    </Snackbar>
+    </SnackbarContent>
   );
-};
+});

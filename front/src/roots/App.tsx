@@ -13,7 +13,7 @@ const App: React.FunctionComponent = () => {
         <img src={Image} alt='background' style={{ position: 'fixed', minWidth: '150vh', maxHeight: '150vh'}}/>
         <div style={{ backgroundColor: 'black', height: '100%', width: '100%', position: 'fixed', opacity: '0.2' }}/>
       </div>
-      <Container component="main" maxWidth="xs" sx={{ mt: { xs: 4, sm: 6, md: 8, lg: 16 } }}>
+      <Container component="main" maxWidth="xs" sx={{ mt: { xs: 4, sm: 6, md: 8, lg: 16 }}}>
         <CssBaseline/>
         <Outlet/>
       </Container>

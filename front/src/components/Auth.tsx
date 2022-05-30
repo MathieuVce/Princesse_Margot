@@ -1,10 +1,9 @@
-import { AlertPop } from "./Alert";
 import { EAuth } from "../@types/EAuth";
-import { Link } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
-import { EAlert } from "../@types/EAlert";
 import { checkEmail } from '../utils/utils';
 import { useContext, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { AlertContext } from "../contexts/AlertContext";
 import { ClientContext } from "../contexts/ClientContext";
 import { IAuth, IPassword, IRegister, IResponse } from "../@types/IClient";
 import { LockOutlined, PersonRounded, LockOpenRounded, RotateLeftRounded } from '@material-ui/icons';
@@ -17,8 +16,9 @@ interface IAuthProps {
 
 export const Auth: React.FC<IAuthProps> = ({ type, values, children }) => {
   const { login, register, resetPassword } = useContext(ClientContext);
-  const [show, setShow] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
+  const { Alerts } = useContext(AlertContext);
+  const navigate = useNavigate();
+  
   const [loading, setLoading] = useState<boolean>(false);
   const [consent, setConsent] = useState<boolean>(false);
   const itemObj: {[key: string]: {info: string[], icon: IconProps}} = {
@@ -26,53 +26,52 @@ export const Auth: React.FC<IAuthProps> = ({ type, values, children }) => {
     'register': {info: ["S'inscrire", "J'accepte les conditions d'utilisation de Princesse Margot*",  "Déjà un compte ? Connectez-vous", "/login"], icon:  <PersonRounded/>},
     'password': {info: ["Réinitialiser mot de passe", "",  "Revenir à la page de connexion", "/login"], icon: <RotateLeftRounded/>}
   };
+  const itemRedirect: {[key: string]: string} = {
+    'login': "/home",
+    'register': "/login",
+    'password': "/login"
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const callbackList: {[key: string]: Function} = {
       'login': async function loginUser() {
-        const res: IResponse = await login(values as IAuth);
-        if (res.status === EAlert.success) {
-          setMessage(res.message);
-          setShow(true);
-        }
+        return await login(values as IAuth);
       },
       'register': async function registerUser() {
-        const res: IResponse = await register(values as IRegister);
-        if (res.status === EAlert.success) {
-          setMessage(res.message);
-          setShow(true);
-        }
+        return await register(values as IRegister);
       },
       'password': async function resetUserPassword() {
-        const res: IResponse = await resetPassword(values as IPassword);
-        if (res.status === EAlert.success) {
-          setMessage(res.message);
-          setShow(true);
-        }
+        return await resetPassword(values as IPassword);
       }
     };
     setLoading(true);
-    await callbackList[type]();
+    const res: IResponse = await callbackList[type]();
+    Alerts[res.status]({message: res.message})
     setLoading(false);
+    navigate(itemRedirect[type]);
   };
 
   const handleDisable = () => {
-    if (type === EAuth.register) {
-      const registerValues = values as IRegister;
-      return (!consent || !registerValues.login.password || !registerValues.details.birthDate || !registerValues.details.firstName || !registerValues.details.lastName || !checkEmail(registerValues.login.email));
-    } else if (type === EAuth.login) {
-      const authValues = values as IAuth;
-      return (!checkEmail(authValues.email) || !authValues.password);
-    } else {
-      const { email } = values as IPassword;
-      return (!checkEmail(email));
-    }
+    const callbackList: {[key: string]: Function} = {
+      'login': function disableLogin() {
+        const authValues = values as IAuth;
+        return (!checkEmail(authValues.email) || !authValues.password);
+      },
+      'register': function disableRegister() {
+        const registerValues = values as IRegister;
+        return (!consent || !registerValues.login.password || !registerValues.details.birthDate || !registerValues.details.firstName || !registerValues.details.lastName || !checkEmail(registerValues.login.email));
+      },
+      'password': function disablePassword() {
+        const { email } = values as IPassword;
+        return (!checkEmail(email));
+      }
+    };
+    return callbackList[type]();
   };
 
   return (
    <>
-    <AlertPop show={show} setShow={setShow} message={message} type={EAlert.success}/>
     <Box
       sx={{
         marginTop: 4,
